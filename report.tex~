@@ -1,0 +1,62 @@
+\documentclass[twoside=true, openright, pdftex, bibliography=totoc, chapterprefix=true, appendixprefix=true, numbers=noenddot, parskip=half, titlepage, index=totoc, headlines=3, footlines=2, headings=normal, language=german]{scrartcl}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}                   % latin9 utf8
+\usepackage[german]{babel}                    % german, ngerman, english
+\bibliographystyle{unsrt}
+\usepackage{booktabs}
+\usepackage{cleveref}[german]
+%\bibliographystyle{ieeetran}
+%\bibliographystyle{ieeetr}
+%\bibliographystyle{plain}
+%\hypersetup{colorlinks=false}
+%\hypersetup{colorlinks=true,urlcolor=black,linkcolor=black}
+%single spacing is default
+%\onehalfspacing
+%\singlespacing
+%\setlength{\footskip}{1cm}
+
+\author{Marcel Rothering}
+\title{Performance-Metriken und Evaluation von Supervised Machine Learning Algorithmen}
+
+
+\begin{document}
+\maketitle
+% Um eine noch besseren Schätzwert für die Performance ungesehener Daten zu erzielen, kann man K-Fold Cross-Validation verwenden.
+\section{Einführung}
+Die Daten wurden aufbereitet, neue Features abgeleitet und verschieden Machine Learning Modelle trainiert. Doch wie bewertet man die Performance dieser Modelle? Wie entscheide ich mich z.B. zwischen einem Neuronalen Netz, Random Forest oder Gradient Boosting Classifier? Hierfür verwendet man im Machine Learning Bereich sogenannte Performance Metriken. Diese werden für einen Testdatensatz (\textit{Hold-out Set}) evaluiert, welches nicht zum Training des Modells verwendet wurde, um die Performance für ungesehene Daten abzuschätzen. Doch welche Metriken werden für welches Problem eigentlich verwendet und wann ist die Performance ausreichend?
+
+In diesem Blogbeitrag werden wir verschiedene Performance Metriken für Supervised Machine Learning vorstellen. Zunächst starten wir mit den Metriken für Klassifikation, gefolgt von denen für Regressionsmodelle. Anschließend stellen wir kurz das Kreuzvalidierungsverfahren vor, um einen noch besseren Schätzwert für die Performance eines Modells auf ungesehene Daten zu ermitteln. 
+
+\section{Metriken für Klassifaktionsmodelle}
+Klassifikationsmodelle könne in verschiedene Kategorien eingeteilt werden: Binäre, Multi-class, multi-label und hierarchische Klassifikation. Die meisten Performance Metriken für die verschiedenen Kategorien lassen sich aus denen der binären Klassifikation ableiten, weshalb wir uns in diesem Blogbeitrag auf binäre Klassifikation fokussieren. Der interessierte Leser findet die Ableitungen der Performance-Metriken auf komplexere Klassifikationsmodelle in \cite{Sokolova:2009:SAP:1542545.1542682}.
+
+\paragraph{Accuracy}
+Die wohl einfachste Performance Metrik für Klassifikationsmodelle ist die Accuarcy/Genauigkeit. Diese lässt sich wie folgt berechnen
+\begin{equation}
+\mathrm{Acc} = \frac{\# correct\ predictions }{\# all\ predictions}.
+\end{equation}
+Hat man z.B. 55 richtige Vorhersagen für 100 Beobachtungen gemacht, dann ist die Genauigkeit 55~\% und nicht viel besser als der Zufall \footnote{Das gilt nur, falls es sich hier um zwei ausbalanzierte Klassen handelt.}. Letztere Aussage gilt nur, falls die beiden Klassen, 0 und 1, ausbalanziert sind, d.h. im Datensatz gibt es ungefähr gleich viele Beobachten der Klasse 0 und der Klasse 1. Falls eine der beiden Klassen unter- oder überrepresentiert ist, dann ist die Accuarcy keine gute Metrik. Stellen Sie sich zum Beispiel eine Datensatz vor in dem 95 Beobachtungen zur Klasse 0 gehören und nur 5 zur Klasse 1. Ein Modell, welches nun immer die Klasse 0 vorhersagen würde erzielt dann eine Accuracy von 95~\%. Klingt gut, ist in diesem Fall aber schlecht und die Accuracy ist hier nicht geignet. Bei solch einem Problem ist es von Vorteil die Klassifikationsergebnisse in eine sogenannte Confusion-Matrix aufzuteilen.
+
+\paragraph{Confusion-Matrix}
+\begin{table}[]
+\centering
+\caption{Confusion Matrix als Performance Metrik für ein Binäres Klassifikationsproblem.\label{conf}}
+\label{my-label}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+\multicolumn{1}{l}{}                                 & \begin{tabular}[c]{@{}c@{}}Predicted:\\ 0\end{tabular} & \begin{tabular}[c]{@{}c@{}}Predicted:\\ 1\end{tabular} \\ \midrule
+\begin{tabular}[c]{@{}c@{}}Actual: \\ 0\end{tabular} & TN                                                     & FP                                                     \\
+\begin{tabular}[c]{@{}c@{}}Actual:\\ 1\end{tabular}  & FN                                                     & TP                                                    
+\end{tabular}
+\end{table}
+
+In \cref{conf} ist die allgemeine Confusion-Matrix gezeigt.
+
+\section{Metriken für Regressionsmodelle}
+\section{K-Fold Kreuzvalidierung}
+
+
+\bibliography{literatur.bib} 
+
+\end{document}
+%% end of file
